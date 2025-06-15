@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>        body {
+            width: 400px;
+            min-height: 600px;
+            max-height: 700px;
+            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            margin: 0;
+            overflow-y: auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .subtitle {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+        
+        .input-section {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        input {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #0077b5;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        button:hover {
+            background: #005885;
+        }
+        
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .results {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .profile-info {
+            margin-bottom: 10px;
+        }
+        
+        .profile-info strong {
+            display: block;
+            margin-bottom: 3px;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .error {
+            background: rgba(255, 0, 0, 0.2);
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        
+        .success {
+            background: rgba(0, 255, 0, 0.2);
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        
+        .tabs {
+            display: flex;
+            margin-bottom: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .tab {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-size: 12px;
+        }
+        
+        .tab.active {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">LinkedIn Analyzer</div>
+        <div class="subtitle">İşe Alım Uzmanı Asistanı</div>
+    </div>
+    
+    <div class="tabs">
+        <div class="tab active" data-tab="analyze">Analiz</div>
+        <div class="tab" data-tab="history">Geçmiş</div>
+        <div class="tab" data-tab="settings">Ayarlar</div>
+    </div>
+    
+    <div class="tab-content active" id="analyze">        <div class="input-section">
+            <div class="form-group">
+                <label for="profileId">LinkedIn Profil ID'si:</label>
+                <input type="text" id="profileId" placeholder="ufuk-doğuhan-gürgen-562a69165">
+                <div style="font-size: 10px; opacity: 0.7; margin-top: 3px;">
+                    Örnek: ufuk-doğuhan-gürgen-562a69165
+                </div>
+            </div>
+            <button id="analyzeBtn">Profili Analiz Et</button>
+            <button id="getCurrentPageBtn">Mevcut Sayfayı Analiz Et</button>
+        </div>
+        
+        <div id="loading" class="loading" style="display: none;">
+            <div>Profil analiz ediliyor...</div>
+        </div>
+        
+        <div id="results" class="results" style="display: none;">
+            <div id="profileData"></div>
+        </div>
+    </div>
+    
+    <div class="tab-content" id="history">
+        <div class="results">
+            <div id="historyList">
+                <p>Henüz analiz edilmiş profil bulunmuyor.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="tab-content" id="settings">
+        <div class="input-section">
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="autoAnalyze"> 
+                    LinkedIn profilinde otomatik analiz
+                </label>
+            </div>
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="saveHistory"> 
+                    Analiz geçmişini kaydet
+                </label>
+            </div>
+            <button id="clearHistory">Geçmişi Temizle</button>
+        </div>
+    </div>
+    
+    <script src="popup.js"></script>
+</body>
+</html>

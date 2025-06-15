@@ -1,0 +1,37 @@
+{
+  "name": "linkedin-profile-analyzer",
+  "version": "1.0.0",
+  "description": "İşe alım uzmanları için LinkedIn profil analizi yapan Chrome extension",
+  "main": "popup.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "echo \"Chrome extension - no build needed\"",
+    "dev": "echo \"Chrome extension - load as unpacked extension in Chrome\"",
+    "lint": "echo \"Linting not configured yet\""
+  },
+  "keywords": [
+    "linkedin",
+    "profile",
+    "analyzer",
+    "chrome-extension",
+    "recruitment",
+    "hr"
+  ],
+  "author": "İşe Alım Uzmanı",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/linkedin-profile-analyzer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-username/linkedin-profile-analyzer/issues"
+  },
+  "homepage": "https://github.com/your-username/linkedin-profile-analyzer#readme",
+  "devDependencies": {
+    "web-ext": "^7.0.0"
+  },
+  "webExt": {
+    "sourceDir": ".",
+    "artifactsDir": "dist"
+  }
+}

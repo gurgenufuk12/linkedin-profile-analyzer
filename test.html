@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkedIn Profile Analyzer - Test</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            color: #0077b5;
+            margin-bottom: 30px;
+        }
+        
+        .step {
+            background: #e7f3ff;
+            padding: 15px;
+            border-left: 4px solid #0077b5;
+            margin-bottom: 15px;
+        }
+        
+        .step h3 {
+            margin-top: 0;
+            color: #0077b5;
+        }
+        
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffd60a;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        
+        .success {
+            background: #d4edda;
+            border: 1px solid #28a745;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        
+        .code {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            border: 1px solid #e9ecef;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="header">
+            <h1>🔍 LinkedIn Profile Analyzer</h1>
+            <p>Chrome Extension Kurulum Rehberi</p>
+        </div>
+        
+        <div class="warning">
+            <strong>⚠️ Önemli:</strong> Bu extension'ı kullanmadan önce Chrome'da geliştirici modu etkinleştirilmeli ve extension yüklenmelidir.
+        </div>
+        
+        <div class="step">
+            <h3>1. Chrome Extensions Sayfasını Açın</h3>
+            <p>Chrome tarayıcısında adres çubuğuna aşağıdaki adresi yazın:</p>
+            <div class="code">chrome://extensions/</div>
+        </div>
+        
+        <div class="step">
+            <h3>2. Geliştirici Modunu Etkinleştirin</h3>
+            <p>Sayfanın sağ üst köşesindeki "Developer mode" (Geliştirici modu) düğmesini etkinleştirin.</p>
+        </div>
+        
+        <div class="step">
+            <h3>3. Extension'ı Yükleyin</h3>
+            <p>"Load unpacked" (Paketlenmemiş uzantı yükle) butonuna tıklayın ve bu proje klasörünü seçin.</p>
+        </div>
+          <div class="step">
+            <h3>4. Extension'ı Test Edin</h3>
+            <p>Extension başarıyla yüklendikten sonra:</p>
+            <ul>
+                <li>Extension ikonuna tıklayın</li>
+                <li>LinkedIn profil ID'si girin (örnek: ufuk-doğuhan-gürgen-562a69165)</li>
+                <li>"Profili Analiz Et" butonuna tıklayın</li>
+                <li>Alternatif olarak LinkedIn'de bir profil açıp "Mevcut Sayfayı Analiz Et" kullanın</li>
+            </ul>
+        </div>
+        
+        <div class="success">
+            <strong>✅ Başarılı!</strong> Extension artık kullanıma hazır. LinkedIn profillerini analiz etmeye başlayabilirsiniz.
+        </div>
+        
+        <div class="card">
+            <h2>🚀 Özellikler</h2>            <ul>
+                <li><strong>ID ile Analiz:</strong> LinkedIn profil ID'si girerek analiz yapın (ufuk-doğuhan-gürgen-562a69165)</li>
+                <li><strong>Mevcut Sayfa Analizi:</strong> Açık olan LinkedIn profilini anında analiz edin</li>
+                <li><strong>Takipçi & Bağlantı:</strong> Profil sahibinin takipçi ve bağlantı sayılarını çeker</li>
+                <li><strong>Geçmiş Kaydetme:</strong> Analiz edilen profillerin geçmişini saklayın</li>
+                <li><strong>Otomatik Analiz:</strong> LinkedIn profillerinde otomatik analiz yapma seçeneği</li>
+            </ul>
+        </div>
+        
+        <div class="card">
+            <h2>⚙️ Geliştirme Notları</h2>
+            <p>Bu extension Manifest V3 kullanarak geliştirilmiştir ve aşağıdaki dosyalardan oluşur:</p>
+            <ul>
+                <li><code>manifest.json</code> - Extension tanım dosyası</li>
+                <li><code>popup.html/js</code> - Ana kullanıcı arayüzü</li>
+                <li><code>content.js</code> - LinkedIn sayfasında çalışan script</li>
+                <li><code>background.js</code> - Service worker (arka plan işlemleri)</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

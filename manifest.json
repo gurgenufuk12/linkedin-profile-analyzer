@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "name": "LinkedIn Profile Analyzer",
+  "version": "1.0.0",
+  "description": "İşe alım uzmanları için LinkedIn profil analizi yapan Chrome extension",  "permissions": [
+    "activeTab",
+    "scripting", 
+    "storage",
+    "contextMenus"
+  ],
+  "host_permissions": [
+    "https://www.linkedin.com/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "LinkedIn Profile Analyzer"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.linkedin.com/in/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  }
+}
