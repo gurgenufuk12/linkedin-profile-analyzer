@@ -2,210 +2,419 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <style>        body {
+    <style>
+        :root {
+            --primary-color: #0A66C2;
+            --secondary-color: #0073B1;
+            --background-color: #f3f2ef;
+            --card-background: #ffffff;
+            --text-color: #191919;
+            --text-secondary-color: #5E5E5E;
+            --border-color: #e0e0e0;
+            --danger-color: #d9534f;
+            --success-color: #5cb85c;
+        }
+
+        body {
             width: 400px;
-            min-height: 600px;
-            max-height: 700px;
-            padding: 20px;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            max-height: 600px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--background-color);
             margin: 0;
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; /* Prevent body scroll */
+        }
+
+        .container {
+            padding: 16px;
             overflow-y: auto;
+            flex-grow: 1;
         }
         
-        .header {
-            text-align: center;
-            margin-bottom: 20px;
+        /* Custom Scrollbar */
+        .container::-webkit-scrollbar {
+            width: 6px;
         }
-        
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 5px;
+        .container::-webkit-scrollbar-track {
+            background: #f1f1f1;
         }
-        
-        .subtitle {
-            font-size: 12px;
-            opacity: 0.8;
-        }
-        
-        .input-section {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            backdrop-filter: blur(10px);
-        }
-        
-        .form-group {
-            margin-bottom: 15px;
-        }
-        
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-size: 14px;
-            font-weight: 500;
-        }
-        
-        input {
-            width: 100%;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            font-size: 14px;
-            box-sizing: border-box;
-        }
-        
-        button {
-            width: 100%;
-            padding: 12px;
-            background: #0077b5;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        
-        button:hover {
-            background: #005885;
-        }
-        
-        button:disabled {
+        .container::-webkit-scrollbar-thumb {
             background: #ccc;
-            cursor: not-allowed;
+            border-radius: 3px;
         }
-        
-        .results {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 15px;
-            border-radius: 10px;
-            backdrop-filter: blur(10px);
-            max-height: 300px;
-            overflow-y: auto;
+        .container::-webkit-scrollbar-thumb:hover {
+            background: #aaa;
         }
-        
-        .profile-info {
-            margin-bottom: 10px;
-        }
-        
-        .profile-info strong {
-            display: block;
-            margin-bottom: 3px;
-        }
-        
-        .loading {
+
+        .header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 16px;
             text-align: center;
-            padding: 20px;
+            flex-shrink: 0;
+        }
+
+        .header h1 {
+            font-size: 20px;
+            margin: 0;
+            font-weight: 600;
         }
         
-        .error {
-            background: rgba(255, 0, 0, 0.2);
-            padding: 10px;
-            border-radius: 5px;
-            margin-top: 10px;
+        .header p {
+            font-size: 12px;
+            margin: 4px 0 0;
+            opacity: 0.9;
         }
-        
-        .success {
-            background: rgba(0, 255, 0, 0.2);
-            padding: 10px;
-            border-radius: 5px;
-            margin-top: 10px;
-        }
-        
+
         .tabs {
             display: flex;
-            margin-bottom: 15px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 5px;
-            overflow: hidden;
+            background-color: var(--card-background);
+            border-bottom: 1px solid var(--border-color);
+            flex-shrink: 0;
         }
-        
+
         .tab {
             flex: 1;
-            padding: 10px;
+            padding: 12px;
             text-align: center;
             cursor: pointer;
-            transition: background 0.3s;
-            font-size: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary-color);
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s ease-in-out;
         }
-        
+
+        .tab:hover {
+            background-color: #f7f7f7;
+        }
+
         .tab.active {
-            background: rgba(255, 255, 255, 0.2);
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
         }
         
+        .tab i {
+            margin-right: 6px;
+        }
+
         .tab-content {
             display: none;
         }
-        
+
         .tab-content.active {
             display: block;
+        }
+
+        .card {
+            background-color: var(--card-background);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary-color);
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            font-size: 14px;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(10, 102, 194, 0.2);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .btn-secondary {
+            background-color: var(--card-background);
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #eef5ff;
+        }
+
+        button:disabled {
+            background-color: #e0e0e0;
+            color: #a0a0a0;
+            cursor: not-allowed;
+            border-color: #e0e0e0;
+        }
+
+        .loading, .error, .success, .info {
+            padding: 12px;
+            border-radius: 5px;
+            margin-top: 16px;
+            text-align: center;
+        }
+
+        .loading {
+            color: var(--text-secondary-color);
+        }
+        
+        .error {
+            background-color: #fdecea;
+            color: var(--danger-color);
+            border: 1px solid var(--danger-color);
+        }
+        
+        .success {
+            background-color: #eaf6ea;
+            color: var(--success-color);
+            border: 1px solid var(--success-color);
+        }
+
+        .info {
+            background-color: #eef5ff;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+        }
+        
+        #profileData, #historyList {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .profile-card, .post-card, .history-item {
+            background-color: var(--card-background);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 12px;
+        }
+        
+        .profile-card h3 {
+            font-size: 16px;
+            margin: 0 0 8px;
+            color: var(--primary-color);
+        }
+        
+        .profile-card p {
+            font-size: 14px;
+            margin: 4px 0;
+        }
+        
+        .post-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .post-title {
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .post-time {
+            font-size: 12px;
+            color: var(--text-secondary-color);
+        }
+
+        .post-content {
+            font-size: 13px;
+            line-height: 1.4;
+            color: var(--text-color);
+        }
+
+        .post-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 12px;
+        }
+
+        .post-stats span {
+            margin-right: 12px;
+            color: var(--text-secondary-color);
+            font-size: 13px;
+        }
+
+        .post-link {
+            font-weight: 600;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.2s;
+        }
+
+        .post-link:hover {
+            color: var(--secondary-color);
+            text-decoration: underline;
+        }
+        
+        .settings-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .setting-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 22px;
+        }
+
+        .switch input { display: none; }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 22px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--primary-color);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(18px);
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <div class="logo">LinkedIn Analyzer</div>
-        <div class="subtitle">İşe Alım Uzmanı Asistanı</div>
+        <h1>LinkedIn Analyzer</h1>
+        <p>İşe Alım Uzmanı Asistanı</p>
     </div>
-    
+
     <div class="tabs">
-        <div class="tab active" data-tab="analyze">Analiz</div>
-        <div class="tab" data-tab="history">Geçmiş</div>
-        <div class="tab" data-tab="settings">Ayarlar</div>
+        <div class="tab active" data-tab="analyze"><i class="fas fa-search"></i>Analiz</div>
+        <div class="tab" data-tab="history"><i class="fas fa-history"></i>Geçmiş</div>
+        <div class="tab" data-tab="settings"><i class="fas fa-cog"></i>Ayarlar</div>
     </div>
-    
-    <div class="tab-content active" id="analyze">        <div class="input-section">
-            <div class="form-group">
-                <label for="profileId">LinkedIn Profil ID'si:</label>
-                <input type="text" id="profileId" placeholder="ufuk-doğuhan-gürgen-562a69165">
-                <div style="font-size: 10px; opacity: 0.7; margin-top: 3px;">
-                    Örnek: ufuk-doğuhan-gürgen-562a69165
+
+    <div class="container">
+        <div class="tab-content active" id="analyze">
+            <div class="card">
+                <div class="form-group">
+                    <label for="profileId">LinkedIn Profil ID'si</label>
+                    <input type="text" id="profileId" placeholder="ör: ufuk-doğuhan-gürgen-562a69165">
+                </div>
+                <div class="button-group">
+                    <button id="analyzeBtn" class="btn-primary"><i class="fas fa-user-check"></i>Profili Analiz Et</button>
+                    <button id="getCurrentPageBtn" class="btn-secondary"><i class="fas fa-file-alt"></i>Mevcut Sayfa</button>
                 </div>
             </div>
-            <button id="analyzeBtn">Profili Analiz Et</button>
-            <button id="getCurrentPageBtn">Mevcut Sayfayı Analiz Et</button>
+
+            <div id="loading" class="loading" style="display: none;">
+                <i class="fas fa-spinner fa-spin"></i> Profil analiz ediliyor...
+            </div>
+            <div id="error" class="error" style="display: none;"></div>
+            
+            <div id="results">
+                <div id="profileData"></div>
+            </div>
         </div>
-        
-        <div id="loading" class="loading" style="display: none;">
-            <div>Profil analiz ediliyor...</div>
+
+        <div class="tab-content" id="history">
+            <div class="card">
+                 <div id="historyList">
+                    <div class="info">Henüz analiz edilmiş profil bulunmuyor.</div>
+                </div>
+            </div>
         </div>
-        
-        <div id="results" class="results" style="display: none;">
-            <div id="profileData"></div>
-        </div>
-    </div>
-    
-    <div class="tab-content" id="history">
-        <div class="results">
-            <div id="historyList">
-                <p>Henüz analiz edilmiş profil bulunmuyor.</p>
+
+        <div class="tab-content" id="settings">
+            <div class="card">
+                <div class="settings-group">
+                    <div class="setting-item">
+                        <span>Otomatik analiz</span>
+                        <label class="switch">
+                            <input type="checkbox" id="autoAnalyze">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <span>Geçmişi kaydet</span>
+                        <label class="switch">
+                            <input type="checkbox" id="saveHistory">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+                <hr style="border: none; border-top: 1px solid var(--border-color); margin: 16px 0;">
+                <button id="clearHistory" class="btn-secondary" style="border-color: var(--danger-color); color: var(--danger-color);">
+                    <i class="fas fa-trash-alt"></i> Geçmişi Temizle
+                </button>
             </div>
         </div>
     </div>
-    
-    <div class="tab-content" id="settings">
-        <div class="input-section">
-            <div class="form-group">
-                <label>
-                    <input type="checkbox" id="autoAnalyze"> 
-                    LinkedIn profilinde otomatik analiz
-                </label>
-            </div>
-            <div class="form-group">
-                <label>
-                    <input type="checkbox" id="saveHistory"> 
-                    Analiz geçmişini kaydet
-                </label>
-            </div>
-            <button id="clearHistory">Geçmişi Temizle</button>
-        </div>
-    </div>
-    
+
     <script src="popup.js"></script>
 </body>
 </html>
