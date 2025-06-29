@@ -26,6 +26,7 @@ async function getProfileInfo() {
         headline: "Başlık bulunamadı",
         connections: "Bağlantı bulunamadı",
         followers: "Takipçi bulunamadı",
+        avatar: "",
         posts: [],
         error: null,
     };
@@ -56,16 +57,33 @@ async function getProfileInfo() {
             result.headline = headlineElement.textContent.trim();
         }
 
+        // Avatar
+        const avatarElement = document.querySelector('.pv-top-card-profile-picture img, .profile-photo-edit__preview, img.profile-photo-edit__preview, img.pv-top-card-profile-picture__image');
+        if (avatarElement && avatarElement.src) {
+            result.avatar = avatarElement.src;
+        }
+
         const pageText = document.body.innerText;
         const connectionsMatch = pageText.match(/(\d+|500\+)\s*(bağlantı|connections)/i);
         if (connectionsMatch) result.connections = connectionsMatch[1];
 
-        const followersMatch = pageText.match(/(\d+|\d{1,3}(?:[.,]\d{3})*)\s*(takipçi|followers)/i);
+        const followersMatch = pageText.match(/([\d.,]+)\s*(takipçi|followers)/i);
         if (followersMatch) result.followers = followersMatch[1];
 
         logToConsole(`Temel bilgiler: ${result.name}, ${result.connections} bağlantı, ${result.followers} takipçi`);
 
-        const postElements = document.querySelectorAll('div.update-components-update-v2, div.feed-shared-update-v2, .occludable-update');
+        // Sadece gönderi kartı bulunamazsa scrollBy tetikle
+        let postElements = document.querySelectorAll('div.update-components-update-v2, div.feed-shared-update-v2, .occludable-update');
+        if (!postElements || postElements.length === 0) {
+            logToConsole(`[DEBUG] window.scrollBy tetiklendi (gönderi bulunamadı). window.location.href: ${window.location.href}`);
+            window.scrollBy(0, window.innerHeight);
+            await new Promise(resolve => setTimeout(resolve, 800));
+            // Scroll sonrası tekrar gönderi kartlarını kontrol et
+            postElements = document.querySelectorAll('div.update-components-update-v2, div.feed-shared-update-v2, .occludable-update');
+        }
+
+
+        // postElements tekrar tanımlanmasın, yukarıda let ile tanımlandı
         const uniquePosts = new Set();
         postElements.forEach((postElement) => {
             if (result.posts.length >= 10) return;
@@ -89,13 +107,31 @@ async function getProfileInfo() {
             };
 
             // Tarih ve Post Linki
-            const timeElement = postElement.querySelector('.update-components-text-view > span[aria-hidden="true"], .feed-shared-actor__sub-description span[aria-hidden="true"]');
-            if (timeElement) {
-                post.date = timeElement.textContent.trim();
-                const linkElement = timeElement.closest('a');
-                if (linkElement && linkElement.href.includes('/feed/update/')) {
-                    post.url = linkElement.href;
+            // Gönderi tarihi için: sadece zaman ifadesi içeren <span class="visually-hidden"> veya <time> etiketlerini kontrol et
+            let dateText = "";
+            const dateCandidates = postElement.querySelectorAll('span.visually-hidden, time');
+            for (const el of dateCandidates) {
+                const txt = el.textContent.trim();
+                // Türkçe ve İngilizce zaman ifadeleri
+                if (/(saniye|dakika|saat|gün|hafta|ay|yıl|second|minute|hour|day|week|mo|month|yr|year|d|h|w)/i.test(txt)) {
+                    dateText = txt;
+                    break;
                 }
+            }
+            post.date = dateText;
+
+            // DEBUG: Gönderi kartı içindeki tüm linkleri logla
+            const allLinks = postElement.querySelectorAll('a');
+            let found = false;
+            allLinks.forEach(l => {
+                console.log('[DEBUG] Gönderi kartı link:', l.href);
+                if (!found && l.href && l.href.includes('/feed/update/')) {
+                    post.url = l.href;
+                    found = true;
+                }
+            });
+            if (!found) {
+                console.warn('[DEBUG] Bu gönderi kartında /feed/update/ linki bulunamadı.');
             }
 
             // Beğeni ve Yorum Sayıları
